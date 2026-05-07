@@ -6,3 +6,4 @@ build/
 coverage/
 backend/uploads/
 frontend/.vite/
+backend/mongodb-data/

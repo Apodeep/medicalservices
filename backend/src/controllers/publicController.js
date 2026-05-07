@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import { User } from "../models/User.js";
 import { DoctorProfile } from "../models/DoctorProfile.js";
 import { ROLES } from "../constants/roles.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 const services = [
   "General Consultation",
@@ -24,4 +25,14 @@ export const publicContent = asyncHandler(async (req, res) => {
     "user specialization bio experienceYears"
   );
   res.json({ doctors, profiles, services, testimonials });
+});
+
+export const sendContact = asyncHandler(async (req, res) => {
+  const { name, email, subject, message } = req.body;
+  await sendEmail({
+    to: "Abdulrhmanapodeep@gmail.com",
+    subject: `Contact Form: ${subject}`,
+    html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`
+  });
+  res.json({ success: true });
 });
